@@ -29,9 +29,11 @@ author: "{{ user_id |e }}"
 redirect_from: "index.php?post/{{ post_url | slugify }} "
 ---
 
+{% if post_excerpt is defined %}
 {{ post_excerpt }}
 
 <!--more-->
+{% endif %}
 
 {{ post_content }}
 """
