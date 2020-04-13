@@ -11,6 +11,7 @@ from slugify import slugify
 sql_get_posts = """
 SELECT
     post_content,
+    post_excerpt,
     post_id,
     post_title,
     post_dt,
