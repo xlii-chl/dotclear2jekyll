@@ -16,8 +16,11 @@ SELECT
     post_title,
     post_dt,
     post_url,
-    user_id
-FROM dc_post
+    COALESCE(u.user_displayname, p.user_id) AS user_id,
+    c.cat_title
+FROM dc_post AS p
+LEFT JOIN dc_user AS u ON p.user_id = u.user_id
+LEFT JOIN dc_category AS c ON p.cat_id = c.cat_id
 ORDER BY post_dt ASC
 ;
 """
@@ -27,7 +30,8 @@ template_jekyll_post = """---
 layout: post
 title: "{{ post_title |e }}"
 author: "{{ user_id |e }}"
-redirect_from: "index.php?post/{{ post_url | slugify }} "
+categories: [{{ cat_title }}]
+redirect_from: "index.php?post/{{ post_url }}"
 ---
 
 {% if post_excerpt is defined %}
